@@ -106,16 +106,12 @@ function scorerPrompt(word) {
    let scoreAnswer = input.question 
    ("Which scoring algorithm would you like to use?\n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1 or 2: ");
    if(scoreAnswer === '0') {
-      scoringAlgorithms[0].scorerFunction = scoringAlgorithms[0].scorerFunction(word);
       correctObject = scoringAlgorithms[0];
    } else if (scoreAnswer === '1') {
-      scoringAlgorithms[1].scorerFunction = scoringAlgorithms[1].scorerFunction(word);
       correctObject = scoringAlgorithms[1];
    } else if (scoreAnswer === '2') {
-      scoringAlgorithms[2].scorerFunction = scoringAlgorithms[2].scorerFunction(word);
       correctObject = scoringAlgorithms[2];
    } else scorerPrompt()
-   // console.log(correctObject)
    return correctObject;
 };
 
@@ -139,8 +135,9 @@ function transform(oldObject) {
 function runProgram() {
 
 let answer = initialPrompt();
+let chosenMethodScore = scorerPrompt(answer);
 
-   console.log("Score for " + "'" + answer + "': " + scorerPrompt(answer).scorerFunction);
+   console.log("Score for " + "'" + answer + "': " + chosenMethodScore.scorerFunction(answer));
 
 };
 
