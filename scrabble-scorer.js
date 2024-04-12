@@ -33,7 +33,7 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   answer = input.question("Let's play some scrabble! Enter a word:");
+   answer = input.question("Let's play some Scrabble!\n\nEnter a word to score: ");
    return answer;
 };
 
@@ -102,15 +102,21 @@ const scoringAlgorithms = [simpleScore, bonusVowels, scrabble];
 
 
 function scorerPrompt(word) {
+   let correctObject = {};
    let scoreAnswer = input.question 
-   ("Which method would you like to choose?\n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1 or 2: ");
+   ("Which scoring algorithm would you like to use?\n\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1 or 2: ");
    if(scoreAnswer === '0') {
-      return scoringAlgorithms[0];
+      scoringAlgorithms[0].scorerFunction = scoringAlgorithms[0].scorerFunction(word);
+      correctObject = scoringAlgorithms[0];
    } else if (scoreAnswer === '1') {
-      console.log("Score for " + "'" + word + "' : "+ scoringAlgorithms[1].scorerFunction(word));
+      scoringAlgorithms[1].scorerFunction = scoringAlgorithms[1].scorerFunction(word);
+      correctObject = scoringAlgorithms[1];
    } else if (scoreAnswer === '2') {
-      console.log("Score for " + "'" + word + "' : "+ scoringAlgorithms[2].scorerFunction(word));
+      scoringAlgorithms[2].scorerFunction = scoringAlgorithms[2].scorerFunction(word);
+      correctObject = scoringAlgorithms[2];
    } else scorerPrompt()
+   // console.log(correctObject)
+   return correctObject;
 };
 
  
@@ -124,18 +130,19 @@ function transform(oldObject) {
          newObject[newKeys[i].toLowerCase()] = Number(item);
       }
    }
-   return newObject
+   return newObject;
 };
 
-
-//newpoint structure needs to go above scrabble scor eeventually
 
 
 
 function runProgram() {
-   
-   scorerPrompt(initialPrompt());
-}
+
+let answer = initialPrompt();
+
+   console.log("Score for " + "'" + answer + "': " + scorerPrompt(answer).scorerFunction);
+
+};
 
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
